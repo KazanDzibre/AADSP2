@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\primerZadatka\maja_aadsp2_done\model0\model0\WAVheader.cpp">
+    <ClCompile Include="irr.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\MitroZadatak\ProcessWavFile\ProcessWavFile\main.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WAVheader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\primerZadatka\maja_aadsp2_done\model0\model0\WAVheader.h">
+    <ClInclude Include="WAVheader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
