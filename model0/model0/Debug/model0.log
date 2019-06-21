@@ -4,4 +4,8 @@ c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\main.cpp(93): warning C4996: 
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
 c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\main.cpp(95): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
+  WAVheader.cpp
+c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\wavheader.cpp(84): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: see declaration of 'fopen'
+  Generating Code...
   model0.vcxproj -> C:\Users\Marko\Desktop\AADSP2\AADSP2\model0\Debug\model0.exe
