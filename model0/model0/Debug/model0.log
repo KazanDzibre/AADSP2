@@ -1,7 +1,7 @@
 ﻿  main.cpp
-c:\users\marko\desktop\aadsp2\mitrovicprojekat\aadsp2\model0\model0\main.cpp(21): error C3861: 'CLIP': identifier not found
-c:\users\marko\desktop\aadsp2\mitrovicprojekat\aadsp2\model0\model0\main.cpp(111): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\marko\desktop\aadsp2\mitrovicprojekat\aadsp2\model0\model0\main.cpp(53): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-c:\users\marko\desktop\aadsp2\mitrovicprojekat\aadsp2\model0\model0\main.cpp(55): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\main.cpp(151): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\main.cpp(93): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
+c:\users\marko\desktop\aadsp2\aadsp2\model0\model0\main.cpp(95): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
+  model0.vcxproj -> C:\Users\Marko\Desktop\AADSP2\AADSP2\model0\Debug\model0.exe

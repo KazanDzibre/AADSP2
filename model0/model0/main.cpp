@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "WAVheader.h"
-#include "iir.h"
 
 #define BLOCK_SIZE 16
 #define MAX_NUM_CHANNEL 8
@@ -11,6 +10,40 @@ double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 double leviTok[BLOCK_SIZE];
 double desniTok[BLOCK_SIZE];
 
+
+
+double CLIP(double accum) {
+	if (accum > 1) {
+		accum = 1;
+	}
+	else if (accum < -1) {
+		accum = -1;
+	}
+
+	return accum;
+}
+
+
+double first_order_IIR(double input, double* coefficients, double* z_x, double* z_y)
+{
+	double temp;
+
+	z_x[0] = input; /* Copy input to x[0] */
+
+	temp = (coefficients[0] * z_x[0]);   /* B0 * x(n)     */
+	temp += (coefficients[1] * z_x[1]);    /* B1 * x(n-1) */
+	temp -= (coefficients[3] * z_y[1]);    /* A1 * y(n-1) */
+
+
+	z_y[0] = (temp);
+
+	/* Shuffle values along one place for next time */
+
+	z_y[1] = z_y[0];   /* y(n-1) = y(n)   */
+	z_x[1] = z_x[0];   /* x(n-1) = x(n)   */
+
+	return (temp);
+}
 double shelvingLP(double input, double* coeff, double* z_x, double* z_y, double k)
 {
 	double filtered_input, output;
@@ -23,16 +56,23 @@ double shelvingLP(double input, double* coeff, double* z_x, double* z_y, double 
 }
 
 
+
+double x_history0[] = { 0,0 };
+
+double y_history0[] = { 0,0 };
+
+double LPF1kHz[4] = { 0.24523727540750304000,
+		0.24523727540750304000,
+		1.00000000000000000000,
+		-0.50952544949442879000
+};
+
+
 void processing() {
 	
-	int i;
-
-	for (i = 0; i < BLOCK_SIZE; i++) {
-		leviTok[i] = sampleBuffer[0][i];
-		desniTok[i] = sampleBuffer[0][i];
-		//sampleBuffer[0][i] = 
+	for (int i = 0; i < BLOCK_SIZE; i++) {	
+		sampleBuffer[0][i] = shelvingLP(sampleBuffer[0][i], LPF1kHz, x_history0, y_history0, 16);
 	}
-
 }
 
 
