@@ -1,16 +1,37 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "WAVheader.h"
 
 #define BLOCK_SIZE 16
 #define MAX_NUM_CHANNEL 8
+#define M_PI 3.14159265358979323846
 
 double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 double leviTok[BLOCK_SIZE];
 double desniTok[BLOCK_SIZE];
 
+double coefs[4] = { 0, 0, 0, 0 };
 
+double* coefs_ptr = coefs;
+
+void getCoefs(double sampling_freq, double cut_freq)
+{
+	
+
+	*(coefs + 3) = (1 - sin(2 * M_PI * cut_freq / sampling_freq)) / cos(2 * M_PI * cut_freq / sampling_freq);
+	if (*(coefs + 3) < -1 || *(coefs) > 1)
+	{
+		*(coefs + 3) = (1 + sin(2 * M_PI * cut_freq / sampling_freq)) / cos(2 * M_PI * cut_freq / sampling_freq);
+	}
+
+	*(coefs) = *(coefs + 1) = (1 - *(coefs + 3)) / 2;
+
+	*(coefs + 2) = 1;
+
+	*(coefs + 3) = -*(coefs + 3);
+}
 
 double CLIP(double accum) {
 	if (accum > 1) {
@@ -23,24 +44,25 @@ double CLIP(double accum) {
 	return accum;
 }
 
-
 double first_order_IIR(double input, double* coefficients, double* z_x, double* z_y)
 {
 	double temp;
 
+	coefs_ptr = coefs;
+
 	z_x[0] = input; /* Copy input to x[0] */
 
-	temp = (coefficients[0] * z_x[0]);   /* B0 * x(n)     */
-	temp += (coefficients[1] * z_x[1]);    /* B1 * x(n-1) */
-	temp -= (coefficients[3] * z_y[1]);    /* A1 * y(n-1) */
+	temp = (*coefficients * *(z_x));   /* B0 * x(n)     */
+	temp += (*(coefficients + 1) * *(z_x + 1));    /* B1 * x(n-1) */
+	temp -= (*(coefficients + 3)* *(z_y + 1));    /* A1 * y(n-1) */
 
 
-	z_y[0] = (temp);
+	*z_y = (temp);
 
 	/* Shuffle values along one place for next time */
 
-	z_y[1] = z_y[0];   /* y(n-1) = y(n)   */
-	z_x[1] = z_x[0];   /* x(n-1) = x(n)   */
+	*(z_y + 1) = *(z_y);   /* y(n-1) = y(n)   */
+	*(z_x + 1) = *(z_x);   /* x(n-1) = x(n)   */
 
 	return (temp);
 }
@@ -61,19 +83,11 @@ double x_history0[] = { 0,0 };
 
 double y_history0[] = { 0,0 };
 
-double LPF1kHz[4] = { 0.24523727540750304000,
-		0.24523727540750304000,
-		1.00000000000000000000,
-		-0.50952544949442879000
-};
-
 
 void processing() {
 
-	double *SBptr = sampleBuffer[0];
-
 	for (int i = 0; i < BLOCK_SIZE; i++) {
-		*SBptr++ = shelvingLP(*SBptr, LPF1kHz, x_history0, y_history0, 16);
+		sampleBuffer[0][i] = shelvingLP(sampleBuffer[0][i], coefs, x_history0, y_history0, 16);
 	}
 }
 
@@ -98,6 +112,9 @@ int main(int argc, char* argv[])
 	wav_out = OpenWavFileForRead(WavOutputName, "wb");
 	//-------------------------------------------------
 
+	double sampleFreq = atof(argv[3]);
+
+	double cutFreq = atof(argv[4]);
 	// Read input wav header
 	//-------------------------------------------------
 	ReadWavHeader(wav_in, inputWAVhdr);
@@ -121,6 +138,7 @@ int main(int argc, char* argv[])
 	//-------------------------------------------------
 	WriteWavHeader(wav_out, outputWAVhdr);
 
+	getCoefs(sampleFreq, cutFreq);
 
 	// Processing loop
 	//-------------------------------------------------	
@@ -129,6 +147,8 @@ int main(int argc, char* argv[])
 		int BytesPerSample = inputWAVhdr.fmt.BitsPerSample / 8;
 		const double SAMPLE_SCALE = -(double)(1 << 31);		//2^31
 		int iNumSamples = inputWAVhdr.data.SubChunk2Size / (inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample / 8);
+
+
 
 		// exact file length should be handled correctly...
 		for (int i = 0; i < iNumSamples / BLOCK_SIZE; i++)
@@ -144,6 +164,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
+
 			processing();
 
 			for (int j = 0; j < BLOCK_SIZE; j++)
@@ -157,6 +178,9 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+
+
+
 
 	// Close files
 	//-------------------------------------------------	
