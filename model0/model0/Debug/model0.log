@@ -1,11 +1,11 @@
 ﻿  main.cpp
-c:\users\marko\desktop\stevanaadps@\aadsp2\model0\model0\main.cpp(172): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\marko\desktop\stevanaadps@\aadsp2\model0\model0\main.cpp(106): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\marko\desktop\stevanaadps@\aadsp2\model0\model0\main.cpp(108): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model0\main.cpp(170,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model0\main.cpp(104,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model0\main.cpp(106,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   WAVheader.cpp
-c:\users\marko\desktop\stevanaadps@\aadsp2\model0\model0\wavheader.cpp(84): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: see declaration of 'fopen'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model0\WAVheader.cpp(84,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Generating Code...
-  model0.vcxproj -> C:\Users\Marko\Desktop\STEVANAADPS@\AADSP2\model0\Debug\model0.exe
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+  model0.vcxproj -> C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\Debug\model0.exe

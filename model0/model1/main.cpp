@@ -9,12 +9,11 @@
 #define M_PI 3.14159265358979323846
 
 double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
-double leviTok[BLOCK_SIZE];
-double desniTok[BLOCK_SIZE];
 
 double coefs[4] = { 0, 0, 0, 0 };
 
 double* coefs_ptr = coefs;
+double* sb_ptr = sampleBuffer[0];
 
 void getCoefs(double sampling_freq, double cut_freq)
 {
@@ -87,8 +86,10 @@ double y_history0[] = { 0,0 };
 void processing() {
 
 	for (int i = 0; i < BLOCK_SIZE; i++) {
-		sampleBuffer[0][i] = shelvingLP(sampleBuffer[0][i], coefs, x_history0, y_history0, 16);
+		*sb_ptr++ = shelvingLP(*sb_ptr, coefs, x_history0, y_history0, 16);
 	}
+
+	sb_ptr = sampleBuffer[0];
 }
 
 

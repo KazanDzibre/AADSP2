@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(10,1): warning C4005: 'BLOCK_SIZE': macro redefinition
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\common.h(9): message : see previous definition of 'BLOCK_SIZE'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(11,1): warning C4005: 'MAX_NUM_CHANNEL': macro redefinition
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\common.h(10): message : see previous definition of 'MAX_NUM_CHANNEL'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(22,27): warning C4002: too many arguments for function-like macro invocation 'FRACT_NUM'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(22,42): warning C4002: too many arguments for function-like macro invocation 'FRACT_NUM'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(24,27): warning C4002: too many arguments for function-like macro invocation 'FRACT_NUM'
+C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\model2\main.cpp(24,42): warning C4002: too many arguments for function-like macro invocation 'FRACT_NUM'
+  model2.vcxproj -> C:\Users\NAVETS\Desktop\AADSP2_final\AADSP2\model0\Debug\model2.exe

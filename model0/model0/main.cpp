@@ -9,8 +9,6 @@
 #define M_PI 3.14159265358979323846
 
 double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
-double leviTok[BLOCK_SIZE];
-double desniTok[BLOCK_SIZE];
 
 double coefs[4] = { 0, 0, 0, 0};
 
