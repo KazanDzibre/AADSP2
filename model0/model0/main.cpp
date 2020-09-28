@@ -13,22 +13,6 @@ double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 double coefs[4] = { 0, 0, 0, 0};
 
 
-
-void getCoefs(double sampling_freq, double cut_freq)
-{
-	coefs[3] = (1 - sin(2 * M_PI * cut_freq / sampling_freq)) / cos(2 * M_PI * cut_freq / sampling_freq);
-	if (coefs[3] < -1 || coefs[0] > 1)
-	{
-		coefs[3] = (1 + sin(2 * M_PI * cut_freq / sampling_freq)) / cos(2 * M_PI * cut_freq / sampling_freq);
-	}
-
-	coefs[0] = coefs[1] = (1 - coefs[3]) / 2;
-
-	coefs[2] = 1;
-
-	coefs[3] = -coefs[3];
-}
-
 double CLIP(double accum) {
 	if (accum > 1) {
 		accum = 1;
@@ -39,6 +23,32 @@ double CLIP(double accum) {
 
 	return accum;
 }
+
+void getCoefs(double alpha, double *coefs)
+{
+	double tmp1, tmp2;
+
+	tmp1 = 1 * alpha;
+	tmp1 = CLIP(tmp1);
+
+	tmp2 = -(1 * alpha);
+	tmp2 = CLIP(tmp2);
+
+	coefs[0] = tmp1;
+	coefs[1] = -1;
+	coefs[2] = +1;
+	coefs[3] = tmp2;
+}
+
+double getAlpha(double w) 
+{
+	double tmp1 = 1 / cos(w) + tan(w);
+	double tmp2 = 1 / cos(w) - tan(w);
+
+	return (tmp1 >= -1 && tmp1 <= 1) ? tmp1 : tmp2;
+}
+
+
 
 double first_order_IIR(double input, double* coefficients, double* z_x, double* z_y)
 {
@@ -60,17 +70,20 @@ double first_order_IIR(double input, double* coefficients, double* z_x, double* 
 
 	return (temp);
 }
-double shelvingLP(double input, double* coeff, double* z_x, double* z_y, double k)
-{
-	double filtered_input, output;
+double shelvingLP(double input, double* coeff, double* z_x, double* z_y, double k) {
+
+	double filtered_input;
 	double accum;
+
 	filtered_input = first_order_IIR(input, coeff, z_x, z_y);
 	accum = (input + filtered_input) / 2.0;
-	accum += ((input - filtered_input) / 2.0)*k;
-	output = CLIP(accum);
-	return output;
-}
+	accum += ((input - filtered_input) / 2.0) * k;
+	accum = CLIP(accum);
 
+
+	return accum;
+
+}
 
 
 double x_history0[] = { 0,0 };
@@ -82,7 +95,7 @@ double y_history0[] = { 0,0 };
 void processing() {
 
 	for (int i = 0; i < BLOCK_SIZE; i++) {
-		sampleBuffer[0][i] = shelvingLP(sampleBuffer[0][i], coefs, x_history0, y_history0, 16);
+		sampleBuffer[0][i] = shelvingLP(sampleBuffer[0][i], coefs, x_history0, y_history0, 1.2);
 	}
 }
 
@@ -107,9 +120,7 @@ int main(int argc, char* argv[])
 	wav_out = OpenWavFileForRead(WavOutputName, "wb");
 	//-------------------------------------------------
 
-	double sampleFreq = atof(argv[3]);
-
-	double cutFreq = atof(argv[4]);
+	double fc = atof(argv[3]);
 
 	// Read input wav header
 	//-------------------------------------------------
@@ -133,8 +144,10 @@ int main(int argc, char* argv[])
 	// Write output WAV header to file
 	//-------------------------------------------------
 	WriteWavHeader(wav_out, outputWAVhdr);
-
-	getCoefs(sampleFreq, cutFreq);
+	
+	double w = 2 * M_PI * fc / inputWAVhdr.fmt.SampleRate;
+	double alpha = getAlpha(w);
+	getCoefs(alpha,coefs);
 	
 	// Processing loop
 	//-------------------------------------------------	

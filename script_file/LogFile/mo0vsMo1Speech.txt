@@ -1,1 +1,2 @@
+    Recorded file is 268998 samples shorter than the reference file!
       No differences encountered!
